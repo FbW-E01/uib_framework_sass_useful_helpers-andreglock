@@ -1,1 +1,141 @@
 // This is where you can import other stylesheets or write your scss code
+@mixin reset-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul {
+    @include reset-list;
+}
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page--center {
+    @include center;
+}
+
+@mixin hide {
+    display: none;
+}
+
+.hidden {
+    @include hide;
+}
+
+@mixin triangle ($direction, $color: #000) {
+    @if $direction == up {
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+    @else {
+        clip-path: polygon(100% 50%, 0 0, 0 100%);
+    }
+    background-color: $color;
+}
+
+.triangle-example {
+    width: 200px;
+    height: 200px;
+    @include triangle ('up', #0f0);
+}
+
+@mixin fade-in ($time: 1s) {
+    animation: fading linear $time infinite;
+    @keyframes fading {
+        0%, 100% {
+        transform: scale(1.4);
+        }
+        50% {
+        transform: scale(0.9);
+        }
+    }
+}
+
+.reveal-animation-example {
+    background-color: #f44;
+    height: 200px;
+    width: 200px;
+    clip-path: polygon(50% 30%, 65% 10%, 88% 0, 100% 26%, 80% 64%, 50% 100%, 20% 64%, 0 26%, 12% 0, 35% 10%);
+    border-radius: 50%;
+    @include fade-in;
+}
+
+@mixin font-size ($fontSize) {
+    @if $fontSize == xs {
+        font-size: 12px;
+    }
+    @else if $fontSize == sm {
+        font-size: 14px;
+    }
+    @else if $fontSize == m {
+        font-size: 16px;
+    }
+    @else if $fontSize == l {
+        font-size: 32px;
+    }
+    @else if $fontSize == xl {
+        font-size: 48px;
+    }
+    @else if $fontSize == xxl {
+        font-size: 61px;
+    }
+    @else {
+        @error "Property #{$fontSize} must be an actual size 'xs, sm, m, l, xl, or xxl'.";
+      }
+}
+
+.text-xs {
+    @include font-size(xs);
+}
+
+.text-sm {
+    @include font-size(sm);
+}
+
+.text-m {
+    @include font-size(m);
+}
+
+.text-l {
+    @include font-size(l);
+}
+
+.text-xl {
+    @include font-size(xl);
+}
+
+.text-xxl {
+    @include font-size(xxl);
+}
+
+@function font-size ($fontSize) {
+    @if $fontSize == xs {
+        @return 12px;
+    }
+    @else if $fontSize == sm {
+        @return 14px;
+    }
+    @else if $fontSize == m {
+        @return 16px;
+    }
+    @else if $fontSize == l {
+        @return 32px;
+    }
+    @else if $fontSize == xl {
+        @return 48px;
+    }
+    @else if $fontSize == xxl {
+        @return 61px;
+    }
+    @else {
+        @error "Property #{$fontSize} must be an actual size 'xs, sm, m, l, xl, or xxl'.";
+      }
+}
+
+.headline {
+    font-size: font-size('l');
+}
